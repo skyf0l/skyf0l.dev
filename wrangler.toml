@@ -1,0 +1,5 @@
+name = "skyf0l-dev"
+pages_build_output_dir = '.svelte-kit/cloudflare'
+
+compatibility_date = "2025-05-25"
+compatibility_flags = ["nodejs_compat"]
