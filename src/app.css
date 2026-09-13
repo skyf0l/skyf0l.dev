@@ -1,106 +1,79 @@
 @import 'tailwindcss';
-@import '@fontsource/fira-mono';
 
-:root {
-	--font-body:
-		Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
-		'Open Sans', 'Helvetica Neue', sans-serif;
-	--font-mono: 'Fira Mono', monospace;
-	--color-bg-0: rgb(202, 216, 228);
-	--color-bg-1: hsl(209, 36%, 86%);
-	--color-bg-2: hsl(224, 44%, 95%);
-	--color-theme-1: #ff3e00;
-	--color-theme-2: #4075a6;
-	--color-text: rgba(0, 0, 0, 0.7);
-	--column-width: 42rem;
-	--column-margin-top: 4rem;
-	font-family: var(--font-body);
-	color: var(--color-text);
-}
+/* Latin-only subsets: every string on the page is ASCII. */
+@import '@fontsource/chakra-petch/latin-400.css';
+@import '@fontsource/chakra-petch/latin-700.css';
+@import '@fontsource/space-mono/latin-400.css';
 
-body {
-	min-height: 100vh;
-	margin: 0;
-	background-attachment: fixed;
-	background-color: var(--color-bg-1);
-	background-size: 100vw 100vh;
-	background-image:
-		radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 100%),
-		linear-gradient(180deg, var(--color-bg-0) 0%, var(--color-bg-1) 15%, var(--color-bg-2) 50%);
-}
+@theme {
+	/* Near-black ground, cool grey ink, a warm accent and a terminal green. */
+	--color-ink: #05060a;
+	--color-paper: #f2f5f9;
+	--color-accent: #ff8a3c;
+	--color-signal: #5cf09a;
+	/* Used only through opacity modifiers: fog/40 muted, fog/35 dim, fog/15 rules. */
+	--color-fog: #c8dcf0;
 
-h1,
-h2,
-p {
-	font-weight: 400;
-}
+	--font-display: 'Chakra Petch', ui-sans-serif, system-ui, sans-serif;
+	--font-mono: 'Space Mono', ui-monospace, SFMono-Regular, monospace;
 
-p {
-	line-height: 1.5;
-}
+	/* Fluid type: phone floor -> laptop ceiling, so no breakpoints are needed. */
+	--text-eyebrow: clamp(0.5625rem, 1vw, 0.75rem);
+	--text-eyebrow--letter-spacing: 0.3em;
 
-a {
-	color: var(--color-theme-1);
-	text-decoration: none;
-}
+	--text-nav: clamp(0.625rem, 1.1vw, 0.875rem);
+	--text-nav--letter-spacing: 0.14em;
 
-a:hover {
-	text-decoration: underline;
-}
+	--text-prompt: clamp(1.75rem, 6vw, 6rem);
 
-h1 {
-	font-size: 2rem;
-	text-align: center;
-}
+	--text-wordmark: clamp(2.75rem, 10vw, 10.625rem);
+	--text-wordmark--line-height: 0.94;
+	--text-wordmark--letter-spacing: -0.03em;
+	--text-wordmark--font-weight: 700;
 
-h2 {
-	font-size: 1rem;
-}
+	/* steps(1) gives a hard on/off flick rather than a fade. */
+	--animate-blink: blink 1s steps(1) infinite;
+	--animate-blink-slow: blink 2s steps(1) infinite;
 
-pre {
-	font-size: 16px;
-	font-family: var(--font-mono);
-	background-color: rgba(255, 255, 255, 0.45);
-	border-radius: 3px;
-	box-shadow: 2px 2px 6px rgb(255 255 255 / 25%);
-	padding: 0.5em;
-	overflow-x: auto;
-	color: var(--color-text);
-}
-
-.text-column {
-	display: flex;
-	max-width: 48rem;
-	flex: 0.6;
-	flex-direction: column;
-	justify-content: center;
-	margin: 0 auto;
-}
-
-input,
-button {
-	font-size: inherit;
-	font-family: inherit;
-}
-
-button:focus:not(:focus-visible) {
-	outline: none;
-}
-
-@media (min-width: 720px) {
-	h1 {
-		font-size: 2.4rem;
+	@keyframes blink {
+		0%,
+		49% {
+			opacity: 1;
+		}
+		50%,
+		100% {
+			opacity: 0.35;
+		}
 	}
 }
 
-.visually-hidden {
-	border: 0;
-	clip: rect(0 0 0 0);
-	height: auto;
-	margin: 0;
-	overflow: hidden;
-	padding: 0;
-	position: absolute;
-	width: 1px;
-	white-space: nowrap;
+/* Layout rhythm. Kept outside @theme because these are consumed as raw
+   custom properties (`gap-(--gap-stack)`) rather than as a Tailwind namespace. */
+:root {
+	--gap-stack: clamp(1rem, 3vh, 1.75rem);
+	--gap-nav: clamp(1rem, 3vw, 2.5rem);
+	--pad-x: clamp(1.25rem, 6vw, 4.5rem);
+	--pad-frame: clamp(1.5rem, 6vh, 4rem);
+}
+
+@layer base {
+	/* On <html> so the ground colour is painted before hydration. */
+	html {
+		background-color: var(--color-ink);
+		color-scheme: dark;
+	}
+
+	body {
+		font-family: var(--font-display);
+		color: var(--color-paper);
+		-webkit-font-smoothing: antialiased;
+	}
+}
+
+/* Unlayered, so it outranks the utilities it disables. */
+@media (prefers-reduced-motion: reduce) {
+	.animate-blink,
+	.animate-blink-slow {
+		animation: none;
+	}
 }
