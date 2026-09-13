@@ -49,7 +49,7 @@
 				>
 					LinkedIn
 				</a>
-				<a class={link} href="mailto:tom@rorato.dev">Email</a>
+				<a class={link} href="mailto:tom@rorato.net">Email</a>
 			</nav>
 		</footer>
 	</div>
