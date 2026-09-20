@@ -63,7 +63,7 @@ jobs:
           password: ${{ secrets.HARBOR_PASSWORD }}
 
       - id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ${{ vars.HARBOR_REGISTRY }}/${{ vars.HARBOR_PROJECT }}/skyf0l.dev
           tags: |
