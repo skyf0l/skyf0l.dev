@@ -60,7 +60,7 @@ jobs:
       HEADSCALE_URL: https://headscale.skyf0l.dev
     steps:
       - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
+      - uses: docker/setup-buildx-action@v4
 
       # Vault is tailnet-only: join Headscale as an ephemeral tag:ci node, whose
       # ACL reaches the Vault proxy only. The push itself goes to the public
